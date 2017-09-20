@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+START=95
+
+SERVICE_USE_PID=1
+SERVICE_WRITE_PID=1
+SERVICE_DAEMONIZE=1
+CONFIG_FILE=/etc/shadowsocks.json
+
+start() {
+    export PATH=$PATH:/data/usr/bin:/data/usr/sbin
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/usr/lib
+    service_start /data/usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0
+}
+
+stop() {
+    service_stop /data/usr/bin/ss-redir
+}
